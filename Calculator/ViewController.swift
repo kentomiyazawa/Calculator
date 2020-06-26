@@ -9,7 +9,56 @@
 import UIKit
 
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController {
+    
+    // CalculateStatusと言う分類がある
+    enum CalculateStatus {
+        case none, plus, minus, multiplication, division
+    }
+    
+    var secondNumber = ""
+    var firstNumber = ""
+    // 上のenumを呼び出している。最初はnoneにしている
+    var calculateStatus: CalculateStatus = .none
+    
+    // 配列の作成
+    let numbers = [
+        ["C", "%", "$", "÷" ],
+        ["7", "8", "9", "×" ],
+        ["4", "5", "6", "-" ],
+        ["1", "2", "3", "+" ],
+        ["0", ".", "=", ],
+    ]
+    
+
+    @IBOutlet weak var calculatorHeightConstrain: NSLayoutConstraint!
+    @IBOutlet weak var numberLabel: UILabel!
+    @IBOutlet weak var calculatorCollectionView: UICollectionView!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        calculatorCollectionView.delegate = self
+        calculatorCollectionView.dataSource = self
+        calculatorCollectionView.register(CalculatorViewCell.self, forCellWithReuseIdentifier: "cellId")
+        // セルの大元の大きさを設定
+        calculatorHeightConstrain.constant = view.frame.width * 1.4
+        calculatorCollectionView.backgroundColor = .clear
+        
+        // 両端にスペースを開ける
+        calculatorCollectionView.contentInset = .init(top: 0, left: 14, bottom: 0, right: 14)
+        view.backgroundColor = .black
+    }
+    
+    //　Cを押した時のメソッド
+    func clear(){
+        firstNumber = ""
+        secondNumber = ""
+        numberLabel.text = "0"
+        calculateStatus = .none
+    }
+}
+
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     // セクションの数
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return numbers.count
@@ -69,39 +118,60 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     // セルがタッチされた時に認識させるメソッド
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let number = numbers[indexPath.section][indexPath.row]
-        
-        
-        // 足算をする時の条件分岐
-        if calculateStatus == .none {
+        switch calculateStatus {
+        case .none:
             switch number {
             // 数字を押した時
             case "0"..."9":
-                numberLabel.text = number
+                // 押した数字をfirstNumberに入れている。+=にしているのは2桁以上の場合
+                firstNumber += number
+                numberLabel.text = firstNumber
             // プラスを押した時
             case "+":
-                firstNumber = numberLabel.text ?? ""
+                
                 calculateStatus = .plus
+            case "-":
+                calculateStatus = .minus
+            case "×":
+                calculateStatus = .multiplication
+            case "÷":
+                calculateStatus = .division
             // クリアを押した時
             case "C":
                 clear()
             default:
                 break
             }
-        }else if calculateStatus == .plus {
+            
+        case .plus, .minus, .multiplication, .division:
             switch number {
             // ２回目の数宇を押した時
             case "0"..."9":
-                numberLabel.text = number
+                secondNumber += number
+                numberLabel.text = secondNumber
             // =を押した時
             case "=":
-                secondNumber = numberLabel.text ?? ""
-                
                 // text型だtたので小数点付きの数字にする
                 let firstNum = Double(firstNumber) ?? 0
                 let secondNum = Double(secondNumber) ?? 0
                 
-                // 足してからString型にして、表示する
-                numberLabel.text = String(firstNum + secondNum)
+                switch calculateStatus {
+                case .plus:
+                    // 足算してからString型にして、表示する
+                    numberLabel.text = String(firstNum + secondNum)
+                case .minus:
+                    // 引き算してからString型にして、表示する
+                    numberLabel.text = String(firstNum - secondNum)
+                case .multiplication:
+                    // 掛け算してからString型にして、表示する
+                    numberLabel.text = String(firstNum * secondNum)
+                case .division:
+                    // 割り算してからString型にして、表示する
+                    numberLabel.text = String(firstNum / secondNum)
+                default:
+                    break
+                }
+                
             // クリアを押した時
             case "C":
                 clear()
@@ -109,51 +179,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 break
             }
         }
-    }
-    
-    
-    //　Cを押した時のメソッド
-    func clear(){
-        numberLabel.text = "0"
-        calculateStatus = .none
-    }
-    
-    // CalculateStatusと言う分類にnoneとplusがある
-    enum CalculateStatus {
-        case none, plus
-    }
-    
-    var secondNumber = ""
-    var firstNumber = ""
-    // 上のenumを呼び出している。最初はnoneにしている
-    var calculateStatus: CalculateStatus = .none
-    
-    // 配列の作成
-    let numbers = [
-        ["C", "%", "$", "÷" ],
-        ["7", "8", "9", "×" ],
-        ["4", "5", "6", "-" ],
-        ["1", "2", "3", "+" ],
-        ["0", ".", "=", ],
-    ]
-    
-
-    @IBOutlet weak var calculatorHeightConstrain: NSLayoutConstraint!
-    @IBOutlet weak var numberLabel: UILabel!
-    @IBOutlet weak var calculatorCollectionView: UICollectionView!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        calculatorCollectionView.delegate = self
-        calculatorCollectionView.dataSource = self
-        calculatorCollectionView.register(CalculatorViewCell.self, forCellWithReuseIdentifier: "cellId")
-        // セルの大元の大きさを設定
-        calculatorHeightConstrain.constant = view.frame.width * 1.4
-        calculatorCollectionView.backgroundColor = .clear
-        
-        // 両端にスペースを開ける
-        calculatorCollectionView.contentInset = .init(top: 0, left: 14, bottom: 0, right: 14)
-        view.backgroundColor = .black
     }
 }
 
