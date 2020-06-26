@@ -40,23 +40,23 @@
                                 </cells>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12345" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kmn-lf-d78">
-                                <rect key="frame" x="0.0" y="402" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="402" width="401" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="K6C-1r-bB7"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="75"/>
+                                <color key="textColor" systemColor="tertiarySystemBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="WBj-rL-kNd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Fhv-Mf-aBN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WBj-rL-kNd" secondAttribute="trailing" id="IE6-5r-xkz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="WBj-rL-kNd" secondAttribute="bottom" id="Rry-lF-htT"/>
                             <constraint firstItem="WBj-rL-kNd" firstAttribute="top" secondItem="Kmn-lf-d78" secondAttribute="bottom" id="Tyg-JV-UsD"/>
                             <constraint firstItem="Kmn-lf-d78" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="YhI-4U-fet"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Kmn-lf-d78" secondAttribute="trailing" id="tOH-KA-Lat"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Kmn-lf-d78" secondAttribute="trailing" constant="13" id="tOH-KA-Lat"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -68,7 +68,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="133"/>
+            <point key="canvasLocation" x="-257" y="6"/>
         </scene>
     </scenes>
 </document>
