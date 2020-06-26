@@ -27,14 +27,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
            
     // セルの大きさを設定
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var width: CGFloat = 0
         // コレクションビューから隙間を引いてから4でわる
-        let width = (collectionView.frame.width - 3 * 10) / 4
-        return .init(width: width, height: width)
+        width = ((collectionView.frame.width - 10) - 14 * 5) / 4
+        // 0の高さは他の物の高さと一緒で良いのでhightに代入
+        let height = width
+        // ０の大きさを変えている。
+        if indexPath.section == 4 && indexPath.row == 0 {
+            width = width * 2 + 14 + 9
+        }
+        return .init(width: width, height: height)
     }
     
     // cell同士の横の隙間を設定
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 14
     }
     
     // セル一個一個の設定
@@ -43,6 +50,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let cell = calculatorCollectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! CalculatorViewCell
         // 一つ一つのセクションを選んだのち、その中を一つ一つ選ぶ
         cell.numberLabel.text = numbers[indexPath.section][indexPath.row]
+        
+        // ボタンの背景色を変更
+        numbers[indexPath.section][indexPath.row].forEach{ (numberString) in
+            // .descriptionで文字に変換
+            if "0"..."9" ~= numberString || numberString.description == "." {
+                cell.numberLabel.backgroundColor = .darkGray
+            }else if numberString == "C" || numberString == "%" || numberString == "$" {
+                cell.numberLabel.backgroundColor = UIColor.init(white: 1, alpha: 0.7)
+                cell.numberLabel.textColor = .black
+            }
+        }
+        
+        
         return cell
     }
     
@@ -68,6 +88,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         // セルの大元の大きさを設定
         calculatorHeightConstrain.constant = view.frame.width * 1.4
         calculatorCollectionView.backgroundColor = .clear
+        
+        // 両端にスペースを開ける
+        calculatorCollectionView.contentInset = .init(top: 0, left: 14, bottom: 0, right: 14)
         view.backgroundColor = .black
     }
 }
