@@ -8,11 +8,27 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = calculatorCollectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath)
+        cell.backgroundColor = .blue
+        return cell
+    }
+    
 
+    @IBOutlet weak var calculatorHeightConstrain: NSLayoutConstraint!
+    @IBOutlet weak var numberLabel: UILabel!
+    @IBOutlet weak var calculatorCollectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        calculatorCollectionView.delegate = self
+        calculatorCollectionView.dataSource = self
+        calculatorCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cellId")
     }
 
 
