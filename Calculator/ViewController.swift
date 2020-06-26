@@ -127,6 +127,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 // 押した数字をfirstNumberに入れている。+=にしているのは2桁以上の場合
                 firstNumber += number
                 numberLabel.text = firstNumber
+                
+                // 最初の数が0だった、0を表示させない
+                if firstNumber.hasPrefix("0") {
+                    firstNumber = ""
+                }
                 // .を押した時。
             case ".":
                 if !confirmIncludeDecimalPoint(numberString: firstNumber) {
@@ -156,6 +161,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             case "0"..."9":
                 secondNumber += number
                 numberLabel.text = secondNumber
+                // 最初の数が0だった、0を表示させない
+                if secondNumber.hasPrefix("0") {
+                    secondNumber = ""
+                }
             case ".":
                 if !confirmIncludeDecimalPoint(numberString: secondNumber) {
                     secondNumber += number
@@ -167,22 +176,35 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 let firstNum = Double(firstNumber) ?? 0
                 let secondNum = Double(secondNumber) ?? 0
                 
+                var resultString: String?
                 switch calculateStatus {
                 case .plus:
                     // 足算してからString型にして、表示する
-                    numberLabel.text = String(firstNum + secondNum)
+                    resultString = String(firstNum + secondNum)
                 case .minus:
                     // 引き算してからString型にして、表示する
-                    numberLabel.text = String(firstNum - secondNum)
+                    resultString = String(firstNum - secondNum)
                 case .multiplication:
                     // 掛け算してからString型にして、表示する
-                    numberLabel.text = String(firstNum * secondNum)
+                    resultString = String(firstNum * secondNum)
                 case .division:
                     // 割り算してからString型にして、表示する
-                    numberLabel.text = String(firstNum / secondNum)
+                   resultString = String(firstNum / secondNum)
                 default:
                     break
                 }
+                
+                // 計算結果に.０が入っていたら表示させない
+                if  let  result = resultString, result.hasSuffix(".0") {
+                    resultString = result.replacingOccurrences(of: ".0", with: "")
+                }
+                
+                numberLabel.text = resultString
+                // 計算結果に改めて計算する場合
+                firstNumber = ""
+                secondNumber = ""
+                firstNumber += resultString ?? ""
+                calculateStatus = .none
                 
             // クリアを押した時
             case "C":
@@ -205,6 +227,17 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 }
 
 class CalculatorViewCell: UICollectionViewCell {
+    
+    // ボタン押した時少しと色を薄くする
+    override var isHighlighted: Bool {
+        didSet {
+            if isHighlighted {
+                self.numberLabel.alpha = 0.3
+            } else {
+                self.numberLabel.alpha = 1
+            }
+        }
+    }
     
     let numberLabel: UILabel = {
        let label = UILabel()
