@@ -43,9 +43,10 @@ class ViewController: UIViewController {
         // セルの大元の大きさを設定
         calculatorHeightConstrain.constant = view.frame.width * 1.4
         calculatorCollectionView.backgroundColor = .clear
-        
         // 両端にスペースを開ける
         calculatorCollectionView.contentInset = .init(top: 0, left: 14, bottom: 0, right: 14)
+        
+        numberLabel.text = "0"
         view.backgroundColor = .black
     }
     
@@ -126,6 +127,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 // 押した数字をfirstNumberに入れている。+=にしているのは2桁以上の場合
                 firstNumber += number
                 numberLabel.text = firstNumber
+                // .を押した時。
+            case ".":
+                if !confirmIncludeDecimalPoint(numberString: firstNumber) {
+                    firstNumber += number
+                    numberLabel.text = firstNumber
+                }
             // プラスを押した時
             case "+":
                 
@@ -149,6 +156,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             case "0"..."9":
                 secondNumber += number
                 numberLabel.text = secondNumber
+            case ".":
+                if !confirmIncludeDecimalPoint(numberString: secondNumber) {
+                    secondNumber += number
+                    numberLabel.text = secondNumber
+                }
             // =を押した時
             case "=":
                 // text型だtたので小数点付きの数字にする
@@ -178,6 +190,16 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             default:
                 break
             }
+        }
+    }
+    
+    // .を押した時のメソッド
+    private func confirmIncludeDecimalPoint(numberString: String) -> Bool {
+        // 0か.が入っていたら返す
+        if numberString.range(of: ".") != nil || numberString.count == 0 {
+            return true
+        } else {
+            return false
         }
     }
 }
