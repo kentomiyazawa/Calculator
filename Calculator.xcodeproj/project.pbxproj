@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7949AF4C24A63A8E0012FDC9 /* CalculatorViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7949AF4B24A63A8E0012FDC9 /* CalculatorViewCell.swift */; };
 		794F2B0A24A5A3FC00DB97C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F2B0924A5A3FC00DB97C0 /* AppDelegate.swift */; };
 		794F2B0C24A5A3FC00DB97C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F2B0B24A5A3FC00DB97C0 /* SceneDelegate.swift */; };
 		794F2B0E24A5A3FC00DB97C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F2B0D24A5A3FC00DB97C0 /* ViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7949AF4B24A63A8E0012FDC9 /* CalculatorViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewCell.swift; sourceTree = "<group>"; };
 		794F2B0624A5A3FC00DB97C0 /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		794F2B0924A5A3FC00DB97C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		794F2B0B24A5A3FC00DB97C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				794F2B1224A5A3FF00DB97C0 /* Assets.xcassets */,
 				794F2B1424A5A3FF00DB97C0 /* LaunchScreen.storyboard */,
 				794F2B1724A5A3FF00DB97C0 /* Info.plist */,
+				7949AF4B24A63A8E0012FDC9 /* CalculatorViewCell.swift */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7949AF4C24A63A8E0012FDC9 /* CalculatorViewCell.swift in Sources */,
 				794F2B0E24A5A3FC00DB97C0 /* ViewController.swift in Sources */,
 				794F2B0A24A5A3FC00DB97C0 /* AppDelegate.swift in Sources */,
 				794F2B0C24A5A3FC00DB97C0 /* SceneDelegate.swift in Sources */,
