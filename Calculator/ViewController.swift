@@ -24,7 +24,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return .init(width: collectionView.frame.width, height: 10)
     }
-           
+    
     // セルの大きさを設定
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var width: CGFloat = 0
@@ -66,12 +66,74 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         return cell
     }
     
+    // セルがタッチされた時に認識させるメソッド
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let number = numbers[indexPath.section][indexPath.row]
+        
+        
+        // 足算をする時の条件分岐
+        if calculateStatus == .none {
+            switch number {
+            // 数字を押した時
+            case "0"..."9":
+                numberLabel.text = number
+            // プラスを押した時
+            case "+":
+                firstNumber = numberLabel.text ?? ""
+                calculateStatus = .plus
+            // クリアを押した時
+            case "C":
+                clear()
+            default:
+                break
+            }
+        }else if calculateStatus == .plus {
+            switch number {
+            // ２回目の数宇を押した時
+            case "0"..."9":
+                numberLabel.text = number
+            // =を押した時
+            case "=":
+                secondNumber = numberLabel.text ?? ""
+                
+                // text型だtたので小数点付きの数字にする
+                let firstNum = Double(firstNumber) ?? 0
+                let secondNum = Double(secondNumber) ?? 0
+                
+                // 足してからString型にして、表示する
+                numberLabel.text = String(firstNum + secondNum)
+            // クリアを押した時
+            case "C":
+                clear()
+            default:
+                break
+            }
+        }
+    }
+    
+    
+    //　Cを押した時のメソッド
+    func clear(){
+        numberLabel.text = "0"
+        calculateStatus = .none
+    }
+    
+    // CalculateStatusと言う分類にnoneとplusがある
+    enum CalculateStatus {
+        case none, plus
+    }
+    
+    var secondNumber = ""
+    var firstNumber = ""
+    // 上のenumを呼び出している。最初はnoneにしている
+    var calculateStatus: CalculateStatus = .none
+    
     // 配列の作成
     let numbers = [
-        ["C", "%", "$", "+" ],
+        ["C", "%", "$", "÷" ],
         ["7", "8", "9", "×" ],
         ["4", "5", "6", "-" ],
-        ["1", "2", "3", "＋" ],
+        ["1", "2", "3", "+" ],
         ["0", ".", "=", ],
     ]
     
